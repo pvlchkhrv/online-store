@@ -24,12 +24,12 @@ class UserController {
     const user = await User.create({ email, role, password: hashPassword });
     const basket = await Basket.create({ userId: user.id });
     const token = genereateJWT(user.id, user.email, user.role);
-    return res.json({token});
+    return res.json({ token });
   }
 
   async login(req, res, next) {
-    const {email, password} = req.body;
-    const user = await User.findOne({where: {email}});
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       return next(ApiError.internal('No user with such name'));
     }
@@ -38,15 +38,12 @@ class UserController {
       return next(ApiError.internal('Incorrect password'));
     }
     const token = genereateJWT(user.id, user.email, user.role);
-    return res.json({token});
+    return res.json({ token });
   }
 
   async check(req, res, next) {
-    const { id } = req.query;
-    if (!id) {
-      return next(ApiError.badRequest('No id'));
-    }
-    res.json(id);
+    const token = genereateJWT(req.user.id, req.user.email, req.user.role);
+    return res.json({ token });
   }
 }
 
