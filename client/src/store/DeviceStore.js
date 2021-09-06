@@ -1,5 +1,4 @@
-import makeAutoObserverable from 'mobx';
-
+import {makeAutoObservable} from "mobx";
 export default class DeviceStore {
   constructor() {
     this._types = [
@@ -14,7 +13,7 @@ export default class DeviceStore {
       { id: 1, name: '12 pro', price: 1200, rating: 5, img: '' },
       { id: 2, name: 'Galaxy', price: 1200, rating: 5, img: '' },
     ]
-    makeAutoObserverable(this);
+    makeAutoObservable(this);
   }
 
   setTypes(types) {
